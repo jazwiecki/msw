@@ -23,6 +23,8 @@ export interface SetupWorkerApi {
    * Resets request handlers to the initial list given to the `setupWorker` call, or to the explicit next request handlers list, if given.
    */
   resetHandlers: (...nextHandlers: RequestHandlersList) => void
+
+  list: () => void
 }
 
 /**
@@ -126,6 +128,17 @@ export function setupWorker(
         requestHandlers,
         ...nextHandlers,
       )
+    },
+
+    list() {
+      context.requestHandlers.forEach((handler) => {
+        const meta = handler.getMetaInfo()
+
+        console.groupCollapsed(meta.header)
+        console.log(`Declaration: ${meta.callFrame}`)
+        console.log('Resolver: %s', handler.resolver)
+        console.groupEnd()
+      })
     },
   }
 }
