@@ -24,7 +24,10 @@ export interface SetupWorkerApi {
    */
   resetHandlers: (...nextHandlers: RequestHandlersList) => void
 
-  list: () => void
+  /**
+   * Prints the list of currently active request handlers.
+   */
+  printHandlers: () => void
 }
 
 /**
@@ -130,7 +133,7 @@ export function setupWorker(
       )
     },
 
-    list() {
+    printHandlers() {
       context.requestHandlers.forEach((handler) => {
         const meta = handler.getMetaInfo()
 
